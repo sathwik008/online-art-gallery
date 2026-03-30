@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Art Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="page-shell">
+    <header class="hero">
+        <nav class="topbar">
+            <div class="brand">
+                <span class="brand-mark">OA</span>
+                <div>
+                    <p class="eyebrow">Digital Exhibition Platform</p>
+                    <h1>Online Art Gallery</h1>
+                </div>
+            </div>
+            <div class="topbar-actions">
+                <p class="auth-chip" id="auth-status">Not logged in</p>
+                <button class="button button-secondary" type="button" id="logout-button" hidden>Logout</button>
+            </div>
+        </nav>
+
+        <div class="hero-grid">
+            <section class="hero-copy">
+                <p class="section-kicker">Spring Boot + Java</p>
+                <h2>Showcase digital artwork through a gallery that feels curated, modern, and fast.</h2>
+                <p class="hero-text">
+                    Browse featured collections, discover available pieces by category, and manage the gallery from one clean interface backed by Spring Boot.
+                </p>
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#gallery-section">Explore Gallery</a>
+                    <a class="button button-secondary" href="#auth-section">Login</a>
+                </div>
+            </section>
+
+            <aside class="hero-panel">
+                <p class="panel-label">Backend Highlights</p>
+                <ul class="feature-list">
+                    <li>Cached gallery and stats endpoints</li>
+                    <li>Indexed filters for faster retrieval</li>
+                    <li>Validation-backed admin submissions</li>
+                    <li>Live H2-backed demo data</li>
+                </ul>
+            </aside>
+        </div>
+    </header>
+
+    <main>
+        <section class="stats-grid" id="stats-grid">
+            <article class="stat-card">
+                <span>Total Artworks</span>
+                <strong id="total-artworks">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Available</span>
+                <strong id="available-artworks">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Sold</span>
+                <strong id="sold-artworks">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Featured</span>
+                <strong id="featured-artworks">0</strong>
+            </article>
+        </section>
+
+        <section class="content-section" id="auth-section">
+            <div class="section-heading split">
+                <div>
+                    <p class="section-kicker">Access</p>
+                    <h3>Login for buyers and painters</h3>
+                </div>
+                <p class="support-text">Buyer login is used for purchases. Painter login unlocks painting uploads.</p>
+            </div>
+
+            <div class="auth-layout">
+                <article class="auth-card">
+                    <p class="section-kicker">Buyer Demo</p>
+                    <h4 class="auth-title">Purchase artworks</h4>
+                    <p class="support-text">Use the seeded buyer account to unlock the buy flow.</p>
+                    <p class="demo-creds"><strong>Email:</strong> buyer@gallery.com</p>
+                    <p class="demo-creds"><strong>Password:</strong> buyer123</p>
+                    <form class="auth-form" id="buyer-login-form">
+                        <label>
+                            Email
+                            <input type="email" id="buyer-email" value="buyer@gallery.com" required>
+                        </label>
+                        <label>
+                            Password
+                            <input type="password" id="buyer-password" value="buyer123" required>
+                        </label>
+                        <button type="submit" class="button button-primary">Login as Buyer</button>
+                    </form>
+                </article>
+
+                <article class="auth-card">
+                    <p class="section-kicker">Painter Demo</p>
+                    <h4 class="auth-title">Add new paintings</h4>
+                    <p class="support-text">Use the seeded painter account to access the upload form.</p>
+                    <p class="demo-creds"><strong>Email:</strong> painter@gallery.com</p>
+                    <p class="demo-creds"><strong>Password:</strong> painter123</p>
+                    <form class="auth-form" id="painter-login-form">
+                        <label>
+                            Email
+                            <input type="email" id="painter-email" value="painter@gallery.com" required>
+                        </label>
+                        <label>
+                            Password
+                            <input type="password" id="painter-password" value="painter123" required>
+                        </label>
+                        <button type="submit" class="button button-primary">Login as Painter</button>
+                    </form>
+                </article>
+            </div>
+
+            <p class="form-message" id="auth-message"></p>
+        </section>
+
+        <section class="content-section">
+            <div class="section-heading">
+                <div>
+                    <p class="section-kicker">Curated Picks</p>
+                    <h3>Featured artworks</h3>
+                </div>
+            </div>
+            <div class="artwork-grid" id="featured-grid"></div>
+        </section>
+
+        <section class="content-section" id="gallery-section">
+            <div class="section-heading split">
+                <div>
+                    <p class="section-kicker">Collection</p>
+                    <h3>Browse the gallery</h3>
+                </div>
+                <form class="filter-bar" id="filter-form">
+                    <label>
+                        Category
+                        <select id="category-filter">
+                            <option value="">All</option>
+                            <option value="Abstract">Abstract</option>
+                            <option value="Landscape">Landscape</option>
+                            <option value="Minimal">Minimal</option>
+                            <option value="Portrait">Portrait</option>
+                        </select>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="featured-filter">
+                        Featured only
+                    </label>
+                    <button type="submit" class="button button-primary">Apply</button>
+                </form>
+            </div>
+            <div class="artwork-grid" id="gallery-grid"></div>
+        </section>
+
+        <section class="content-section admin-panel" id="admin-panel">
+            <div class="section-heading">
+                <div>
+                    <p class="section-kicker">Admin</p>
+                    <h3>Add a new artwork</h3>
+                </div>
+                <p class="support-text" id="admin-support-text">Login as a painter to add new artwork.</p>
+            </div>
+
+            <form class="admin-form" id="artwork-form">
+                <label>
+                    Title
+                    <input type="text" id="title" placeholder="Chromatic Drift" required>
+                </label>
+                <label>
+                    Artist Name
+                    <input type="text" id="artistName" placeholder="Painter name" required readonly>
+                </label>
+                <label>
+                    Category
+                    <input type="text" id="category" placeholder="Abstract" required>
+                </label>
+                <label>
+                    Price
+                    <input type="number" id="price" step="0.01" min="0.01" placeholder="349.99" required>
+                </label>
+                <label class="full-width">
+                    Description
+                    <textarea id="description" rows="4" placeholder="Dynamic color layering designed for digital exhibition walls." required></textarea>
+                </label>
+                <label class="full-width">
+                    Image URL
+                    <input type="url" id="imageUrl" placeholder="https://example.com/artwork.jpg" required>
+                </label>
+                <p class="support-text full-width">Use a public direct image link. Some sites block embedded images, so plain page links may not display.</p>
+                <label>
+                    Status
+                    <select id="status">
+                        <option value="AVAILABLE">AVAILABLE</option>
+                        <option value="SOLD">SOLD</option>
+                        <option value="ARCHIVED">ARCHIVED</option>
+                    </select>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="featured">
+                    Mark as featured
+                </label>
+                <div class="form-actions full-width">
+                    <button type="submit" class="button button-primary">Create Artwork</button>
+                    <button type="button" class="button button-secondary" id="reset-form">Reset</button>
+                </div>
+                <p class="form-message full-width" id="form-message"></p>
+            </form>
+        </section>
+    </main>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
